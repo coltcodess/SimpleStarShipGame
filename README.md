@@ -1,6 +1,6 @@
 # SimpleStarShipGame
 
 
-<p align="center">  
-  <a href="#title">Unity Simple StarShip Game</a>  
+<p text="center">  
+  <a text="#title">Unity Simple StarShip Game</a>
 <br/>
