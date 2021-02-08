@@ -1,2 +1,3 @@
 # SimpleStarShipGame
-Source code for Simple StarShip Game
+Unity Simple StarShip Game
+
