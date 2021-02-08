@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject completeScreen;
     [SerializeField] GameObject pauseScreen;
     PlayerController playerController;
+    GameTimer gameTimer;
 
     private GameState m_state;
 
@@ -50,16 +52,22 @@ public class GameManager : MonoBehaviour
     { 
         FindObjects();
         ListenEvents();
+        
     }
 
     private void ListenEvents()
     {
+        if(playerController)
+        {
+            playerController.OnPlayerDeathEvent += GameOver;
+        }
         
     }
 
     private void FindObjects()
     {
         playerController = FindObjectOfType<PlayerController>();
+        gameTimer = FindObjectOfType<GameTimer>();
     }
 
     public void SetGameState(GameState p_state)
@@ -71,25 +79,23 @@ public class GameManager : MonoBehaviour
     {        
         isGameActive = true;
         SetGameState(GameState.GAME); 
-
+        gameTimer.ResetTimer();
         EventBroker.CallGameStarted();
     }
 
-    public void EndGame()
+    public void LevelComplete()
+    {
+        isGameActive = false;
+        SetGameState(GameState.MENU);
+        completeScreen.SetActive(true);
+        EventBroker.CallGameEnded();
+    }
+
+    public void GameOver()
     {        
         isGameActive = false;
-
         SetGameState(GameState.MENU);
-        
-        if (playerController.isDead)
-        {
-            gameOverScreen.SetActive(true);
-        } 
-        else
-        {
-            completeScreen.SetActive(true);
-        }
-
+        gameOverScreen.SetActive(true);
         EventBroker.CallGameEnded();
     }
 

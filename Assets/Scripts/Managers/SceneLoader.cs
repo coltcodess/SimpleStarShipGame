@@ -14,7 +14,6 @@ public class SceneLoader : MonoBehaviour
         for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
         {
             _scenes.Enqueue(i);
-
         }
         
     }

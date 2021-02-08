@@ -16,6 +16,9 @@ public class PlayerController : MonoBehaviour
     public delegate void HealthDelegate();
     public event HealthDelegate HealthChangedEvent;
 
+    public delegate void PlayerDeathDelegate();
+    public event PlayerDeathDelegate OnPlayerDeathEvent;
+
     public delegate void PowerUpDelegate();
     public event PowerUpDelegate PowerUpChangedEvent;
 
@@ -126,17 +129,17 @@ public class PlayerController : MonoBehaviour
     private void CalculatePlayerDeath()
     {
         if (health == 0 && !isDead)
-        {
+        {            
             PlayerDeath();
-            isDead = true;
+            OnPlayerDeathEvent();         
         }
     }
 
     public void PlayerDeath()
     {
+        isDead = true;
         Instantiate(deathParticles, transform.position, deathParticles.transform.rotation); 
-        AudioSource.PlayClipAtPoint(deathAudio, transform.position);     
-        
+        AudioSource.PlayClipAtPoint(deathAudio, transform.position);             
         Destroy(gameObject);
     }
     

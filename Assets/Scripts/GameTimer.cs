@@ -32,7 +32,7 @@ public class GameTimer : MonoBehaviour
 
         if (g_gameTimer >= levelTimeLimit)
         {
-            m_gameManager.EndGame();
+            m_gameManager.GameOver();
         }
     }
     
