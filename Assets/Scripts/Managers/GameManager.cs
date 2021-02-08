@@ -21,8 +21,7 @@ public class GameManager : MonoBehaviour
     {
         MENU,
         GAME,
-        PAUSE,
-        Test
+        PAUSE,        
     }
 
     public static GameManager Instance
@@ -39,6 +38,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Start() 
+    {
+        FindObjects();
+    }
+
     private void Awake() 
     {
         if (_instance == null) _instance = this;        
@@ -48,28 +52,20 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(_instance);
     }
     
-    private void Start() 
-    { 
-        FindObjects();
-        ListenEvents();
-        
-    }
-
-    private void ListenEvents()
+    public void StartGame()
     {
-        if(playerController)
-        {
-            playerController.OnPlayerDeathEvent += GameOver;
-        }
-        
-    }
+        FindObjects();
 
+        gameTimer.ResetTimer();
+        EventBroker.CallGameStarted();
+        isGameActive = true;
+        SetGameState(GameState.GAME);
+    }
+   
     private void FindObjects()
     {
         playerController = FindObjectOfType<PlayerController>();
         gameTimer = FindObjectOfType<GameTimer>();
-
-
     }
 
     public void SetGameState(GameState p_state)
@@ -77,28 +73,5 @@ public class GameManager : MonoBehaviour
         m_state = p_state;
     }
 
-    public void StartGame()
-    {        
-        isGameActive = true;
-        SetGameState(GameState.GAME); 
-        gameTimer.ResetTimer();
-        EventBroker.CallGameStarted();
-    }
-
-    public void LevelComplete()
-    {
-        isGameActive = false;
-        SetGameState(GameState.MENU);
-        completeScreen.SetActive(true);
-        EventBroker.CallGameEnded();
-    }
-
-    public void GameOver()
-    {        
-        isGameActive = false;
-        SetGameState(GameState.MENU);
-        gameOverScreen.SetActive(true);
-        EventBroker.CallGameEnded();
-    }
 
 }

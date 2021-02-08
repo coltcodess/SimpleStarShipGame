@@ -5,17 +5,18 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     [SerializeField] float speed = 5f;
-    bool canMove = true;
+    bool b_canMove = true;
 
     private void OnEnable() 
     {
-        EventBroker.GameEnded += StopMovement;        
+        EventBroker.GameOver += StopMovement;
+        EventBroker.LevelComplete += StopMovement;      
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(canMove)
+        if(b_canMove)
         {
             transform.Translate(Vector3.back * Time.deltaTime * speed);
         }        
@@ -23,13 +24,13 @@ public class Movement : MonoBehaviour
 
     public void StopMovement()
     {
-        canMove = false;
+        b_canMove = false;
     }
 
     private void OnDisable() 
     {
-        EventBroker.GameEnded -= StopMovement;
-        
+        EventBroker.GameOver -= StopMovement;
+        EventBroker.LevelComplete -= StopMovement;
     }
 
 

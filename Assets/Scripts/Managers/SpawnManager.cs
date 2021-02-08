@@ -6,6 +6,7 @@ public class SpawnManager : MonoBehaviour
 {
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private GameObject powerUpPrefab;
+
     public float spawnEnemyRate = 1f;
     public float spawnPowerUpRate = 1f;
     
@@ -14,7 +15,8 @@ public class SpawnManager : MonoBehaviour
     private void Awake() 
     {
         EventBroker.GameStarted += StartSpawning;
-        EventBroker.GameEnded += CancelSpawning;
+        EventBroker.GameOver += CancelSpawning;
+        EventBroker.LevelComplete += CancelSpawning;
     }  
 
     private void Start() 
@@ -43,8 +45,9 @@ public class SpawnManager : MonoBehaviour
     public void CancelSpawning()
     {        
         CancelInvoke();
-        EventBroker.GameEnded -= CancelSpawning;
+        EventBroker.GameOver -= CancelSpawning;
         EventBroker.GameStarted -= StartSpawning;
+        EventBroker.LevelComplete -= CancelSpawning;
     }
 
     

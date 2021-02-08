@@ -12,17 +12,12 @@ public class PauseMenu : MonoBehaviour
     private GameManager m_gameManager;
 
 
-
-    // Start is called before the first frame update
-    
-    
     void Start()
     {
         m_gameManager = GameManager.Instance;
 
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         CheckInputs();
@@ -31,6 +26,7 @@ public class PauseMenu : MonoBehaviour
     public void Quit()
     {
         Application.Quit();
+        Debug.Log("Application Quit");
     }
 
     public void Resume()

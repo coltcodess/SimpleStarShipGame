@@ -2,16 +2,25 @@ using System;
 
 public class EventBroker
 {
-    public static Action GameEnded;
+    public static Action GameOver;
+    public static Action LevelComplete;
     public static Action GameStarted;
     
     
 
-    public static void CallGameEnded()
+    public static void CallGameOver()
     {
-        if(GameEnded != null)
+        if(GameOver != null)
         {
-            GameEnded();
+            GameOver();
+        }
+    }
+
+    public static void CallLevelComplete()
+    {
+        if (LevelComplete != null)
+        {
+            LevelComplete();
         }
     }
 
