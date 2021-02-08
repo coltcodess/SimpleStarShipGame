@@ -15,31 +15,29 @@ public class PlayerController : MonoBehaviour
 
     public delegate void HealthDelegate();
     public event HealthDelegate HealthChangedEvent;
-
-    public delegate void PlayerDeathDelegate();
-    public event PlayerDeathDelegate OnPlayerDeathEvent;
-
+    
     public delegate void PowerUpDelegate();
     public event PowerUpDelegate PowerUpChangedEvent;
-
-
-    float horizontalInput;
+    
     Rigidbody _rb;
-    Collider _collider;
-    public float speed = 10f;
-    private float xRange = 4f;
-    private float tiltAngle = 5f;
-    private float firingRate = 0.3f;
+    Collider _collider;    
+    
+    private float m_xRange = 4f;
+    private float m_horizontalInput;
+    private float m_tiltAngle = 5f;
+    private float m_firingRate = 0.3f;
+    private float m_immuneTimer;
+
     public float timeBetweenFire;
     public bool isDead;
-    
+    public float speed = 10f;    
     public bool isImmune;
 
-    private float _immuneTimer;
+    
 
     private void OnEnable() 
     {
-        EventBroker.GameEnded += DisableCollider;    
+        EventBroker.LevelComplete += DisableCollider;    
     }
 
     // Start is called before the first frame update
@@ -48,7 +46,7 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _collider = GetComponent<Collider>();
         
-        timeBetweenFire = firingRate;
+        timeBetweenFire = m_firingRate;
     }
 
     // Update is called once per frame
@@ -82,13 +80,13 @@ public class PlayerController : MonoBehaviour
 
     private void HandleRotation()
     {
-        _rb.rotation = Quaternion.Euler(0.0f, 0.0f, horizontalInput * tiltAngle);
+        _rb.rotation = Quaternion.Euler(0.0f, 0.0f, m_horizontalInput * m_tiltAngle);
     }
 
     private void HandleTranlationInput()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        transform.position += Vector3.right * horizontalInput * Time.deltaTime * speed;
+        m_horizontalInput = Input.GetAxis("Horizontal");
+        transform.position += Vector3.right * m_horizontalInput * Time.deltaTime * speed;
     }
 
     private void HandleFiringInput()
@@ -97,7 +95,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (firingRate <= timeBetweenFire)
+            if (m_firingRate <= timeBetweenFire)
             {
                 Fire();
             }
@@ -106,14 +104,14 @@ public class PlayerController : MonoBehaviour
 
     private void CalculateBounds()
     {
-        if (transform.position.x > xRange)
+        if (transform.position.x > m_xRange)
         {
-            transform.position = new Vector3(xRange, transform.position.y, transform.position.z);
+            transform.position = new Vector3(m_xRange, transform.position.y, transform.position.z);
         }
 
-        if (transform.position.x < -xRange)
+        if (transform.position.x < -m_xRange)
         {
-            transform.position = new Vector3(-xRange, transform.position.y, transform.position.z);
+            transform.position = new Vector3(-m_xRange, transform.position.y, transform.position.z);
         }
     }
 
@@ -123,7 +121,7 @@ public class PlayerController : MonoBehaviour
         var shot = ProjectilePooler.Instance.Get(1);
         
         shot.transform.position = transform.position;
-        shot.gameObject.SetActive(true);
+        shot.gameObject.SetActive(true);        
     }
 
     private void CalculatePlayerDeath()
@@ -131,7 +129,7 @@ public class PlayerController : MonoBehaviour
         if (health == 0 && !isDead)
         {            
             PlayerDeath();
-            OnPlayerDeathEvent();         
+            EventBroker.CallGameOver();        
         }
     }
 
@@ -177,7 +175,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnDisable() 
     {
-        EventBroker.GameEnded -= DisableCollider;
+        EventBroker.LevelComplete -= DisableCollider;
     }
 
     
