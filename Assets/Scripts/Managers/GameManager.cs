@@ -22,7 +22,8 @@ public class GameManager : MonoBehaviour
     {
         MENU,
         GAME,
-        PAUSE
+        PAUSE,
+        Test
     }
 
     public static GameManager Instance
