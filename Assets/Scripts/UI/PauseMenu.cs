@@ -7,7 +7,11 @@ public class PauseMenu : MonoBehaviour
 {   
     public static bool isPaused = false;
 
+    public GameObject m_pauseMenu;
+
     private GameManager m_gameManager;
+
+
 
     // Start is called before the first frame update
     
@@ -29,6 +33,11 @@ public class PauseMenu : MonoBehaviour
         Application.Quit();
     }
 
+    public void Resume()
+    {
+        HidePauseScreen();
+    }
+
     void CheckInputs()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -48,15 +57,16 @@ public class PauseMenu : MonoBehaviour
 
     private void HidePauseScreen()
     {
+        m_pauseMenu.SetActive(false);
         isPaused = false;
-        SetTimeScale(0f);
+        SetTimeScale(1f);
     }
 
     private void DisplayPauseScreen()
     {
+        m_pauseMenu.SetActive(true);
         isPaused = true;
         SetTimeScale(0f);
-
     }
 
     private void SetTimeScale(float p_value)

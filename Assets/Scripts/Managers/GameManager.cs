@@ -12,7 +12,6 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject gameOverScreen;
     [SerializeField] GameObject completeScreen;
-    [SerializeField] GameObject pauseScreen;
     PlayerController playerController;
     GameTimer gameTimer;
 
@@ -69,6 +68,8 @@ public class GameManager : MonoBehaviour
     {
         playerController = FindObjectOfType<PlayerController>();
         gameTimer = FindObjectOfType<GameTimer>();
+
+
     }
 
     public void SetGameState(GameState p_state)
@@ -100,19 +101,4 @@ public class GameManager : MonoBehaviour
         EventBroker.CallGameEnded();
     }
 
-    public void PauseGame()
-    {
-        SetGameState(GameState.PAUSE);
-        Time.timeScale = 0f;
-        pauseScreen.SetActive(true);
-        isGameActive = false;
-    }
-
-    public void UnPauseGame()
-    {
-        SetGameState(GameState.GAME);
-        Time.timeScale = 1f;
-        pauseScreen.SetActive(true);
-        isGameActive = false;
-    }
 }
