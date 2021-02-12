@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    [SerializeField] private GameObject enemyPrefab;
-    [SerializeField] private GameObject powerUpPrefab;
+    [SerializeField] GameObject enemyPrefab;
+    [SerializeField] GameObject powerUpPrefab;
 
     public float spawnEnemyRate = 1f;
     public float spawnPowerUpRate = 1f;

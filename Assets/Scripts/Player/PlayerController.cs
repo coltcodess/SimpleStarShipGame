@@ -27,13 +27,13 @@ public class PlayerController : MonoBehaviour
     private float m_tiltAngle = 5f;
     private float m_firingRate = 0.3f;
     private float m_immuneTimer;
-
-    public float timeBetweenFire;
-    public bool isDead;
-    public float speed = 10f;    
-    public bool isImmune;
-
     
+
+    public float timeBetweenFire;    
+    public float speed = 10f;
+    public bool isDead = false;
+    public bool enableMovement = true;   
+    public bool isImmune = false;    
 
     private void OnEnable() 
     {
@@ -47,35 +47,21 @@ public class PlayerController : MonoBehaviour
         _collider = GetComponent<Collider>();
         
         timeBetweenFire = m_firingRate;
+        enableMovement = true;
     }
 
     // Update is called once per frame
     void Update()
-    {        
-
-        HandleTranlationInput();
-        HandleRotation();
-        HandleFiringInput();
-
-        HandleUIInput();
+    {     
+        if(enableMovement)
+        {
+            HandleTranlationInput();
+            HandleRotation();
+            HandleFiringInput();
+        }      
 
         CalculateBounds();
         CalculatePlayerDeath();
-    }
-
-    private void HandleUIInput()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (GameManager.isGameActive)
-            {
-                GameManager.isGameActive = false;
-            }
-            else
-            {
-                GameManager.isGameActive = true;
-            }
-        }
     }
 
     private void HandleRotation()
@@ -129,7 +115,8 @@ public class PlayerController : MonoBehaviour
         if (health == 0 && !isDead)
         {            
             PlayerDeath();
-            EventBroker.CallGameOver();        
+            EventBroker.CallGameOver();
+            GameTimer.ResetTimer();     
         }
     }
 
@@ -171,13 +158,12 @@ public class PlayerController : MonoBehaviour
     public void DisableCollider()
     {
         _collider.enabled = false;
+        enableMovement = false;
     }
 
     private void OnDisable() 
-    {
+    {        
         EventBroker.LevelComplete -= DisableCollider;
     }
-
-    
     
 }

@@ -5779,7 +5779,7 @@ PrefabInstance:
       objectReference: {fileID: 1821653681}
     - target: {fileID: 965646505918368028, guid: be7fbf1297391d447b6b8817d41b4989, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadNextLevel
+      value: LoadMainMenu
       objectReference: {fileID: 0}
     - target: {fileID: 2315616288993686331, guid: be7fbf1297391d447b6b8817d41b4989, type: 3}
       propertyPath: m_AnchorMax.y
@@ -6090,10 +6090,6 @@ PrefabInstance:
     - target: {fileID: 5657333989309348050, guid: 947340913263bba4cb6001de58d84c41, type: 3}
       propertyPath: m_Name
       value: CORE
-      objectReference: {fileID: 0}
-    - target: {fileID: 8952851718888939627, guid: 947340913263bba4cb6001de58d84c41, type: 3}
-      propertyPath: levelTimeLimit
-      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 947340913263bba4cb6001de58d84c41, type: 3}

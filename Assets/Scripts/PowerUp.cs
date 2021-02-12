@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PowerUp : BaseSpawn
-{
-      
+{      
+
     private void Update()
     {
-        CalculateBounds();
+        CalculateBounds();      
+
     }
 
     private void OnTriggerEnter(Collider other)

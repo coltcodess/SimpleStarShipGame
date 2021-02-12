@@ -5,39 +5,33 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    private Queue<int> _scenes = new Queue<int>();
-
-    
+    private Queue<int> m_scenes = new Queue<int>();    
 
     private void Start() 
     {
         for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
         {
-            _scenes.Enqueue(i);
+            m_scenes.Enqueue(i);
         }
         
     }
-
-    public void LoadStartScene(string level)
-    {        
-        SceneManager.LoadScene(level);        
-    }
-
+    
     public void LoadNextLevel()
     {
         int nextScene = SceneManager.GetActiveScene().buildIndex;
+       
 
-        if(nextScene > SceneManager.sceneCount)
+        if(nextScene < SceneManager.sceneCountInBuildSettings)
         {
-            LoadMainMenu();
+            SceneManager.LoadScene(nextScene + 1);
         }
         else
         {
-            SceneManager.LoadScene(nextScene + 1);
+            LoadMainMenu();
         }        
     }
 
-    public void LoadMainMenu()
+    private void LoadMainMenu()
     {
         SceneManager.LoadScene(0);
     }

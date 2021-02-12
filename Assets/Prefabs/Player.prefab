@@ -124,9 +124,9 @@ MonoBehaviour:
   health: 3
   powerUpAmount: 0
   deathAudio: {fileID: 8300000, guid: fc96116dc3c141440aabb5605744fea2, type: 3}
-  speed: 10
   timeBetweenFire: 0
   isDead: 0
+  speed: 10
   isImmune: 0
 --- !u!1 &8149900102468455887
 GameObject:
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a0c55b749a53604887667e037b79f5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 2889330733190760173, guid: 3b611b43e1212d042abc6d289533e116, type: 3}
+  m_prefab: {fileID: 2889330733190760173, guid: 3b611b43e1212d042abc6d289533e116, type: 3}
 --- !u!1001 &2562063086797703608
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GameTimer : MonoBehaviour 
 {
-    public static float g_gameTimer;
+    private static float g_gameTimer;
     [SerializeField] float levelTimeLimit = 10f;
     private GameManager m_gameManager;
     private bool b_isActive;
@@ -16,6 +16,7 @@ public class GameTimer : MonoBehaviour
     {
         b_isActive = true;
         m_gameManager = GameManager.Instance;
+        
     }
 
     public static float GetGameTimer()
@@ -23,7 +24,7 @@ public class GameTimer : MonoBehaviour
         return Mathf.Round(g_gameTimer);
     }
 
-    public void ResetTimer()
+    public static void ResetTimer()
     {
         g_gameTimer = 0f;
     }
@@ -57,5 +58,6 @@ public class GameTimer : MonoBehaviour
     {
         EventBroker.GameOver -= StopTimer;
     }
-    
+
+        
 }

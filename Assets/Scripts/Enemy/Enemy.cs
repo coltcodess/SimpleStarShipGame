@@ -38,4 +38,5 @@ public class Enemy : BaseSpawn
             Destroy(gameObject);
         }
     }
+
 }
