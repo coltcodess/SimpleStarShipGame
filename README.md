@@ -6,3 +6,11 @@
 <br/>
 
 # Overview
+
+Quick project for general practice of a few design patterns
+  - Singleton Pattern 
+  - Generic Object Pooling
+  - Publish-Subscribe
+  
+ 
+  
