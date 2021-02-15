@@ -5,72 +5,77 @@ using System.Linq;
 using System;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+namespace StarShip
 {
-    private static GameManager _instance = null; 
-
-    PlayerController playerController;
-
-    private GameState m_state;
-
-    public enum GameState
+    public class GameManager : MonoBehaviour
     {
-        MENU,
-        GAME,
-        PAUSE,        
-    }
+        private static GameManager _instance = null;
 
-    public static GameManager Instance
-    {
-        get
+        PlayerController playerController;
+
+        private GameState m_state;
+
+        public enum GameState
         {
-            if (_instance == null)
-            {
-                _instance = new GameManager();
-                DontDestroyOnLoad(_instance);
-            }
-
-            return _instance;
+            MENU,
+            GAME,
+            PAUSE,
         }
-    }
 
-    private void Awake()
-    {
-        if (_instance == null) _instance = this;
+        public static GameManager Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new GameManager();
+                    DontDestroyOnLoad(_instance);
+                }
 
-        else if (_instance != this) Destroy(gameObject);
+                return _instance;
+            }
+        }
 
-        DontDestroyOnLoad(_instance);
-    }
+        private void Awake()
+        {
+            if (_instance == null) _instance = this;
 
-    private void Start() 
-    {               
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
+            else if (_instance != this) Destroy(gameObject);
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        FindObjects();
-        StartGame();
-    }
-    
-    public void StartGame()
-    {
-        GameTimer.ResetTimer();
-        EventBroker.CallGameStarted();        
-        SetGameState(GameState.GAME);
-        
-    }
-   
-    private void FindObjects()
-    {
-        playerController = FindObjectOfType<PlayerController>();
-    }
+            DontDestroyOnLoad(_instance);
+        }
 
-    public void SetGameState(GameState p_state)
-    {
-        m_state = p_state;
-    }
+        private void Start()
+        {
+            StartGame();
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            FindObjects();
+            StartGame();
+        }
+
+        public void StartGame()
+        {
+            SetGameState(GameState.GAME);
+            GameTimer.ResetTimer();
+            EventBroker.CallGameStarted();
+        }
+
+        private void FindObjects()
+        {
+            playerController = FindObjectOfType<PlayerController>();
+        }
+
+        public void SetGameState(GameState p_state)
+        {
+            m_state = p_state;
+        }
 
 
+    } 
 }
+
+

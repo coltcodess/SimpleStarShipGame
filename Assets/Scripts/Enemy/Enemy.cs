@@ -1,42 +1,46 @@
 using UnityEngine;
 
-public class Enemy : BaseSpawn
+namespace StarShip
 {
-    
-    [SerializeField] ParticleSystem deathParticles;
-    [SerializeField] AudioClip deathAudio;
-
-    private void Update() 
+    public class Enemy : BaseSpawn
     {
-        CalculateBounds();
-    }
 
-    private void OnTriggerEnter(Collider other) 
-    {       
+        [SerializeField] ParticleSystem deathParticles;
+        [SerializeField] AudioClip deathAudio;
 
-        if(other.gameObject.tag == "Player")
+        private void Update()
         {
-            PlayerController _player = other.gameObject.GetComponent<PlayerController>();
-            _player.PlayerTakeDamage(1);
+            CalculateBounds();
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+
+            if (other.gameObject.tag == "Player")
+            {
+                PlayerController _player = other.gameObject.GetComponent<PlayerController>();
+                _player.PlayerTakeDamage(1);
+                Destroy(gameObject);
+            }
+        }
+
+        public void DestoryEnemy()
+        {
+            AudioSource.PlayClipAtPoint(deathAudio, transform.position);
+            Instantiate(deathParticles, transform.position, deathParticles.transform.rotation);
             Destroy(gameObject);
         }
-    }
 
-    public void DestoryEnemy()
-    {
-        AudioSource.PlayClipAtPoint(deathAudio, transform.position);
-        Instantiate(deathParticles, transform.position, deathParticles.transform.rotation);
-        Destroy(gameObject);
-    }
-
-    public override void CalculateBounds()
-    {
-        transform.Translate(Vector3.back * Time.deltaTime * speed);
-
-        if (transform.position.z < zBounds)
+        public override void CalculateBounds()
         {
-            Destroy(gameObject);
-        }
-    }
+            transform.Translate(Vector3.back * Time.deltaTime * speed);
 
+            if (transform.position.z < zBounds)
+            {
+                Destroy(gameObject);
+            }
+        }
+
+    }
 }
+

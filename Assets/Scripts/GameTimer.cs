@@ -1,63 +1,67 @@
 using UnityEngine;
 
-public class GameTimer : MonoBehaviour 
+namespace StarShip
 {
-    private static float g_gameTimer;
-    [SerializeField] float levelTimeLimit = 10f;
-    private GameManager m_gameManager;
-    private bool b_isActive;
-
-    private void OnEnable()
+    public class GameTimer : MonoBehaviour
     {
-        EventBroker.GameOver += StopTimer;        
-    }
+        private static float g_gameTimer;
+        [SerializeField] float levelTimeLimit = 10f;
+        private GameManager m_gameManager;
+        private bool b_isActive;
 
-    private void Start() 
-    {
-        b_isActive = true;
-        m_gameManager = GameManager.Instance;
-        
-    }
-
-    public static float GetGameTimer()
-    {
-        return Mathf.Round(g_gameTimer);
-    }
-
-    public static void ResetTimer()
-    {
-        g_gameTimer = 0f;
-    }
-
-    public void StopTimer()
-    {
-        b_isActive = false;
-    }
-
-    private void Update() 
-    {
-        if(b_isActive)
+        private void OnEnable()
         {
-            CalculateTimer();
-        }            
-    }
+            EventBroker.GameOver += StopTimer;
+        }
 
-    private void CalculateTimer()
-    {
-        g_gameTimer += Time.deltaTime;
-
-        if (g_gameTimer >= levelTimeLimit)
+        private void Start()
         {
-            b_isActive = false;
-            EventBroker.CallLevelComplete();
+            b_isActive = true;
+            m_gameManager = GameManager.Instance;
+
+        }
+
+        public void TestFunction(string text)
+        {
+
+        }
+
+
+        public static float GetGameTimer()
+        {
+            return Mathf.Round(g_gameTimer);
+        }
+
+        public static void ResetTimer()
+        {
             g_gameTimer = 0f;
         }
-    }
 
-    private void OnDisable() 
-    {
-        EventBroker.GameOver -= StopTimer;
-    }
+        public void StopTimer() => b_isActive = false;
 
-        
+        private void Update()
+        {
+            if (b_isActive)
+            {
+                CalculateTimer();
+            }
+        }
+
+        private void CalculateTimer()
+        {
+            g_gameTimer += Time.deltaTime;
+
+            if (g_gameTimer >= levelTimeLimit)
+            {
+                b_isActive = false;
+                EventBroker.CallLevelComplete();
+                g_gameTimer = 0f;
+            }
+        }
+
+        private void OnDisable()
+        {
+            EventBroker.GameOver -= StopTimer;
+        }
+    }
 }

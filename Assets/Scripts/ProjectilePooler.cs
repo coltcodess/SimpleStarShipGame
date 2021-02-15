@@ -1,3 +1,8 @@
-public class ProjectilePooler : GenericObjectPool<Projectile>
-{    
+
+namespace StarShip
+{
+    public class ProjectilePooler : GenericObjectPool<Projectile>
+    {
+    }
 }
+

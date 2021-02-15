@@ -2,33 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class PowerUp : BaseSpawn
-{      
-
-    private void Update()
+namespace StarShip
+{
+    public class PowerUp : BaseSpawn
     {
-        CalculateBounds();      
 
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
+        private void Update()
         {
-            PlayerController _player = other.gameObject.GetComponent<PlayerController>();
-            _player.IncreasePowerUp(1);
-            Destroy(gameObject);
+            CalculateBounds();
+
         }
-    }
 
-    public override void CalculateBounds()
-    {
-        transform.Translate(Vector3.back * Time.deltaTime * speed);
-
-        if (transform.position.z < zBounds)
+        private void OnTriggerEnter(Collider other)
         {
-            Destroy(gameObject);
+            if (other.gameObject.tag == "Player")
+            {
+                PlayerController _player = other.gameObject.GetComponent<PlayerController>();
+                _player.IncreasePowerUp(1);
+                Destroy(gameObject);
+            }
+        }
+
+        public override void CalculateBounds()
+        {
+            transform.Translate(Vector3.back * Time.deltaTime * speed);
+
+            if (transform.position.z < zBounds)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }
